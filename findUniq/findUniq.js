@@ -30,13 +30,13 @@ test_findUniq();
 function test_findUniq(strArray) {
 	console.log('\n • test findUniq • \n');
 	let strArray = [
-		'abc',
+		'cb ad ',
+		'adbc',
 		'acb ',
-		'b ac',
-		'testQsa',
-		'b c a ',
-		' cab',
-		'cb a '
+		'b adc',
+		'ad Z cqa',
+		'b c ad ',
+		'd cab' 
 	];
 	console.log('\n str Array : \n', strArray, '\n');
 
