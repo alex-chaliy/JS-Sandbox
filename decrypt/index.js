@@ -1,20 +1,18 @@
 /**
  * Отыскать один, захешированный пароль
+ * Decrypt one hashed password
  */
 
 const crypto = require('crypto');
 
-let currentPass = 'qaz';
-let currentHash = crypto.createHash('sha256').update( currentPass ).digest('hex');
-let truePass = undefined;
-
-// encrypted that must be decrypted
+// encrypted password that must be decrypted
 let encrypted = 'f21fd975e1ca2bc48cfeea4bccbcf10adc390307b8609c686d0e8944488ff156';
 
-!truePass && console.log('\n true pass wasn\'t discovered ');
 
-
-functio checkass() {
+/**
+ * @returns passList : [String]
+ */
+function generatePasswords() {
 	_minPassLength = 2;
 	_maxPassLength = 20;
 
@@ -22,7 +20,7 @@ functio checkass() {
 	let _num = '0123456789';
 	let _allSymb = _abc + _num;
 
-	let _passwords = [];
+	let passList = [];
 
 	for( let i = _minPassLength; i < _maxPassLength; i++ ) {
 		
@@ -34,11 +32,46 @@ functio checkass() {
 				_newPass += _allSymb[k];
 			}
 
-			_passwords.push( _newPass );
+			passList.push( _newPass );
 		}
 	}
+
+	return passList;
 }
 
+
+/**
+ * @takes passList : [String]
+ *
+ * @returns hashedPassList : [{
+ *    pass: String,
+ *    hashedPass: String
+ * }]
+ */
+function hashPasswords( passList ) {
+	return hashedPassList;
+}
+
+
+/**
+ * @takes hashedPassList : [{
+ *    pass: String,
+ *    hashedPass: String
+ * }]
+ *
+ * @returns pass : String
+ */
+function getTruePass( hashedPassList ) {
+	let currentPass = '';
+	let currentHash = crypto.createHash('sha256').update( currentPass ).digest('hex');
+
+	let truePass = undefined;
+
+
+	!truePass && console.log('\n true pass wasn\'t discovered ');
+
+	return truePass;
+}
 
 // получаем массив со всеми(или почти всеми) возможными паролями
 
