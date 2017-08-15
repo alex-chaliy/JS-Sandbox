@@ -18,13 +18,7 @@ let config = {
  * @returns passList : [String]
  */
 function generatePasswords() {
-	_minPassLength = 2;
-	_maxPassLength = 20;
-
-	let passList_pre = [];
 	let passList = [];
-
-
 	return passList;
 }
 
@@ -38,6 +32,7 @@ function generatePasswords() {
  * }]
  */
 function hashPasswords( passList ) {
+	let hashedPassList = [];
 	return hashedPassList;
 }
 
@@ -54,8 +49,7 @@ function getTruePass( hashedPassList ) {
 	let currentPass = '';
 	let currentHash = crypto.createHash('sha256').update( currentPass ).digest('hex');
 
-	let truePass = undefined;
-
+	let truePass;
 
 	!truePass && console.log('\n true pass wasn\'t discovered ');
 
@@ -73,7 +67,11 @@ function getTruePass( hashedPassList ) {
  * @returns passwords : [String]
  */
 function generateNlengthPasswords( passwords_pre, alphabet, max_n, min_n ) {
-	!passwords_pre && ( passwords_pre = genereteMinLengthPasswords() );
+	// debug
+	console.log('\n - generateNlengthPasswords - alphabet \n', alphabet);
+
+	!passwords_pre && ( passwords_pre = genereteMinLengthPasswords( alphabet, min_n ) );
+
 	let passwords = [].concat( passwords_pre );
 
 	// track by passwords, generated in the previous iteration
@@ -89,12 +87,27 @@ function generateNlengthPasswords( passwords_pre, alphabet, max_n, min_n ) {
 			passwords.push( alphabet[j] + curPass_trackBy );
 		}
 	}
+	console.log('passwords - \n' , passwords );
+
+	passwords_pre = passwords_pre.concat( passwords );
 
 	if( passwords_pre <= max_n )
 		generateNlengthPasswords( passwords, alphabet, max_n );
 	else
-		return passwords;
+		return passwords_pre;
 }
+
+function test_generateNlengthPasswords() {
+	console.log('\n * test * generateNlengthPasswords()');
+	let res = generateNlengthPasswords( undefined, config.alphabet, config.maxPassLength, config.minPassLength );
+
+	for(i = 0; i < res.length; i++) {
+		console.log( res[i] );
+	}
+	console.log('\n -end- * test * generateNlengthPasswords()');
+	console.log('generated passwords number - ' + res.length);
+}
+test_generateNlengthPasswords();
 
 /**
  * @takes
@@ -104,6 +117,9 @@ function generateNlengthPasswords( passwords_pre, alphabet, max_n, min_n ) {
  * @returns passwords : [String] // min length passwords
  */
 function genereteMinLengthPasswords(alphabet, min_n) {
+	// debug
+	// console.log('\n - genereteMinLengthPasswords - alphabet \n', alphabet);
+
 	let passwords = [];
 
 	// не, тут рекурсию надо сделать а не циклы
@@ -115,7 +131,6 @@ function genereteMinLengthPasswords(alphabet, min_n) {
 
 	return passwords;
 }
-genereteMinLengthPasswords( config.alphabet, config.minPassLength );
 
 function test_genereteMinLengthPasswords() {
 	console.log('\n * test * genereteMinLengthPasswords()');
@@ -127,16 +142,14 @@ function test_genereteMinLengthPasswords() {
 	console.log('\n -end- * test * genereteMinLengthPasswords()');
 	console.log('generated passwords number - ' + res.length);
 }
-test_genereteMinLengthPasswords();
+// test_genereteMinLengthPasswords();
+
 
 // получаем массив со всеми(или почти всеми) возможными паролями
-
 // хешируем все пароли в sha256, так как искомый пароль зашифрован с пом. алго. sha256
-
 // проходимся по массиву, ищем совпадение шифрованных паролей. Достаём по нужному индексу нужный пароль
 
 
 
 // сгенерировали пароли на 2 символа
-
 // на след. итерации к каждому элементу массива(строки из 2-х символов) прибавляем по одному из всех символов алфавита
