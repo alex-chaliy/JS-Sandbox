@@ -8,6 +8,11 @@ const crypto = require('crypto');
 // encrypted password that must be decrypted
 let encrypted = 'f21fd975e1ca2bc48cfeea4bccbcf10adc390307b8609c686d0e8944488ff156';
 
+let config = {
+	alphabet: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' + '0123456789',
+	minPassLength: 2,
+	maxPassLength: 20
+}
 
 /**
  * @returns passList : [String]
@@ -15,10 +20,6 @@ let encrypted = 'f21fd975e1ca2bc48cfeea4bccbcf10adc390307b8609c686d0e8944488ff15
 function generatePasswords() {
 	_minPassLength = 2;
 	_maxPassLength = 20;
-
-	let _abc = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	let _num = '0123456789';
-	let _allSymb = _abc + _num;
 
 	let passList_pre = [];
 	let passList = [];
@@ -102,10 +103,10 @@ function generateNlengthPasswords( passwords_pre, alphabet, max_n, min_n ) {
  *
  * @returns passwords : [String] // min length passwords
  */
-fuction genereteMinLengthPasswords(alphabet, min_n) {
+function genereteMinLengthPasswords(alphabet, min_n) {
 	let passwords = [];
 
-	// не, туту рекурсию надо сделать а не циклы
+	// не, тут рекурсию надо сделать а не циклы
 	for(i = 0; i < alphabet.length; i++) {
 		for(j = 0; j < alphabet.length; j++) {
 			passwords.push( alphabet[i] + alphabet[j] );
@@ -114,6 +115,19 @@ fuction genereteMinLengthPasswords(alphabet, min_n) {
 
 	return passwords;
 }
+genereteMinLengthPasswords( config.alphabet, config.minPassLength );
+
+function test_genereteMinLengthPasswords() {
+	console.log('\n * test * genereteMinLengthPasswords()');
+	let res = genereteMinLengthPasswords( config.alphabet, config.minPassLength );
+
+	for(i = 0; i < res.length; i++) {
+		console.log( res[i] );
+	}
+	console.log('\n -end- * test * genereteMinLengthPasswords()');
+	console.log('generated passwords number - ' + res.length);
+}
+test_genereteMinLengthPasswords();
 
 // получаем массив со всеми(или почти всеми) возможными паролями
 
